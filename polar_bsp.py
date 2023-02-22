@@ -9,7 +9,7 @@ class polarBSP:
         self.r_max = r_max
         self.depth = depth
         self.boxes = []
-        self.min_r_size = 20
+        self.min_r_size = 10
         self.min_th_size = 30
         self.splits = [[]]*(depth+1)
         self.splits[0] = [[r_min,0,r_max,360]]
@@ -71,11 +71,13 @@ class polarBSP:
                 self.radii.append(p_r)
                 p_th = random.random()*((th_e-dth)-(th_s+dth))+(th_s+dth)
                 ax.scatter(p_th*math.pi/180,p_r,color='blue')
-                # self.draw_orbit(p_r)
+                #self.draw_orbit(p_r)
         else:
             self.radii.append(p_r)
 
     def how_close(self,r_n):
+        """find the element in self.radii that is the closest to r_n
+        return the absolute difference between it and r_n"""
         closest_r = min(self.radii, key=lambda x: abs(x-r_n))
         return abs(closest_r-r_n)
 
