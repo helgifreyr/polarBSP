@@ -13,6 +13,7 @@ class polarBSP:
         self.min_th_size = 30
         self.splits = [[]]*(depth+1)
         self.splits[0] = [[r_min,0,r_max,360]]
+        self.radii = []
 
     def init_plot(self):
         theta = arange(0,361)*math.pi/180
@@ -52,7 +53,7 @@ class polarBSP:
                     new_splits.append([r_start,th_start,split_pos,th_end])
                     new_splits.append([split_pos,th_start,r_end,th_end])
                 else:
-                    if random.random() > 0.3:
+                    if random.random() > 0.2:
                         continue
                     else:
                         self.place_planet(split)
@@ -63,6 +64,8 @@ class polarBSP:
         dr = 0.25*self.min_r_size
         dth = 0.25*self.min_th_size
         p_r = math.sqrt(random.random()*((r_e-dr)**2-(r_s+dr)**2) + (r_s+dr)**2)
+        # check whether p_r is close to any radii in self.radii and only place the "room" if it is not
+        # to make sure orbits aren't too close to each other
         p_th = random.random()*((th_e-dth)-(th_s+dth))+(th_s+dth)
         ax.scatter(p_th*math.pi/180,p_r,color='blue')
         # self.draw_orbit(p_r)
